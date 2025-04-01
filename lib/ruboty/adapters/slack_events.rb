@@ -31,7 +31,7 @@ module Ruboty
           if message[:code]
             <<~MARKDOWN
               ```
-              #{message[:code]}
+              #{message[:body]}
               ```
             MARKDOWN
           else
