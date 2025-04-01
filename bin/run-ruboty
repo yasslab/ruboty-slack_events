@@ -1,0 +1,33 @@
+#!/usr/bin/env ruby
+
+# frozen_string_literal: true
+
+# Run Ruboty with this gem for testing.
+#
+# Usage:
+#   bin/run-ruboty [options]
+#
+# Example:
+#   bin/run-ruboty --dotenv
+
+require "bundler/inline"
+
+gemfile do
+  source "https://rubygems.org"
+
+  gem "ruboty"
+  gem "ruboty-slack_events", path: "../"
+
+  # You can add other ruboty plugins here for testing.
+  gem "ruboty-echo"
+  gem "ruboty-alias"
+end
+
+# Override Ruboty::Robot#bundle to prevent twice bundler setup.
+class Ruboty::Robot
+  def bundle
+    # noop
+  end
+end
+
+Ruboty::CommandBuilder.new(ARGV).build.call
