@@ -10,4 +10,4 @@ gem "rubocop", "~> 1.21"
 gem "rubocop-rake", "~> 0.7"
 gem "rubocop-rbs_inline", "~> 1.3.1"
 
-gem "bump", "~> 0.8.0"
+gem "bump", "~> 0.10.0"
