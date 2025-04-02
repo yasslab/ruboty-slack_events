@@ -41,6 +41,10 @@ module Ruboty
 
           return if message.subtype == "bot_message" && adapter.ignore_bot_message?
 
+          # Some event subtypes (e.g. message_changed) does not have `text` field.
+          # Consider that these events are not a new message.
+          return unless message.text
+
           message_for_robot = {
             body: adapter.rubotify.call(message.text),
             from: channel,
