@@ -24,9 +24,11 @@ gemfile do
 end
 
 # Override Ruboty::Robot#bundle to prevent twice bundler setup.
-class Ruboty::Robot
-  def bundle
-    # noop
+module Ruboty
+  class Robot
+    def bundle
+      # noop
+    end
   end
 end
 
