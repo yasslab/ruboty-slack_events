@@ -16,6 +16,13 @@ module Ruboty
         def handle_event(message) #: void
           Ruboty::SlackEvents::Logger.debug("handle_event") { message.to_json }
 
+          on_generic_event(message)
+        end
+
+        private
+
+        # @rbs message: Slack::Messages::Message -- a generic type event
+        def on_generic_event(message) #: void
           case message.type
           when "message"
             on_message(message)
@@ -49,12 +56,12 @@ module Ruboty
 
         # @rbs message: Slack::Messages::Message -- `event_callback` type event
         def on_event_callback(message)
-          handle_event(message.event)
+          on_generic_event(message.event)
         end
 
         # @rbs message: Slack::Messages::Message -- `events_api` type event
         def on_events_api(message)
-          handle_event(message.payload)
+          on_generic_event(message.payload)
         end
       end
     end
