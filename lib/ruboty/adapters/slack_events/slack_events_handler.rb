@@ -38,8 +38,9 @@ module Ruboty
             body: adapter.rubotify.call(message.text),
             from: channel,
             from_name: user&.name,
-            to: channel
-          } #: RobotMessage
+            to: channel,
+            thread_ts: message.thread_ts
+          } #: receivedMessage
 
           Ruboty::SlackEvents::Logger.debug("robot.receive") { message_for_robot.to_json }
 

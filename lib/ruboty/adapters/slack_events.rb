@@ -14,8 +14,16 @@ module Ruboty
       #   type robotMessage = {
       #     body: String,
       #     from: String,
+      #     to: String,
+      #     original: receivedMessage?,
+      #     code: boolish?,
+      #   }
+      #   type receivedMessage = {
+      #     body: String,
+      #     from: String,
       #     from_name: String,
       #     to: String,
+      #     thread_ts: String?,
       #   }
 
       def run
@@ -41,7 +49,8 @@ module Ruboty
         slack_client.chat_postMessage(
           channel: message[:to],
           attachments: [],
-          markdown_text: text
+          markdown_text: text,
+          thread_ts: message.dig(:original, :thread_ts)
         )
       end
 
