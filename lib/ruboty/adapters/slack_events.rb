@@ -62,12 +62,12 @@ module Ruboty
         @resolvers ||= ::Ruboty::SlackEvents::Resolvers.new(slack_client:)
       end
 
-      def slackify #: ::Ruboty::SlackEvents::Mention::Slackify
-        @slackify ||= ::Ruboty::SlackEvents::Mention::Slackify.new(resolvers:)
+      def slackify #: ::Ruboty::SlackEvents::Filter::Slackify
+        @slackify ||= ::Ruboty::SlackEvents::Filter::Slackify.new(resolvers:)
       end
 
-      def rubotify #: ::Ruboty::SlackEvents::Mention::Rubotify
-        @rubotify ||= ::Ruboty::SlackEvents::Mention::Rubotify.new(resolvers:)
+      def rubotify #: ::Ruboty::SlackEvents::Filter::Rubotify
+        @rubotify ||= ::Ruboty::SlackEvents::Filter::Rubotify.new(resolvers:)
       end
 
       def ignore_bot_message?

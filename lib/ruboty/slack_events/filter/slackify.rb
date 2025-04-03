@@ -2,7 +2,8 @@
 
 module Ruboty
   module SlackEvents
-    module Mention
+    module Filter
+      # Convert Ruboty text format to Slack text format
       class Slackify
         attr_reader :resolvers #: Resolvers
 
