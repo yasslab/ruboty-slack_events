@@ -1,4 +1,5 @@
 ## Unreleased
+## 0.2.0 - 2025-04-03
 
 - Support reply on threads
 - Ignore message events without text field
