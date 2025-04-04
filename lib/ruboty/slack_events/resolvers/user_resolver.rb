@@ -34,6 +34,8 @@ module Ruboty
             Logger.debug { "Slack API: users.info(#{user_id})" }
             res = slack_client.users_info(user: user_id)
             res.user
+          rescue Slack::Web::Api::Errors::UserNotFound => e
+            nil
           end
         end
 
