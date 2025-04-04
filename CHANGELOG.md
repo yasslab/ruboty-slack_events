@@ -1,4 +1,7 @@
 ## Unreleased
+
+- Rewrite text filter to parse links and unescape HTML entities
+
 ## 0.2.0 - 2025-04-03
 
 - Support reply on threads

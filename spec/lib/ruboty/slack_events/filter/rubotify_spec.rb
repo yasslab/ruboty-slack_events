@@ -41,7 +41,7 @@ RSpec.describe Ruboty::SlackEvents::Filter::Rubotify do
       context "when the text contains a link without text" do
         let(:text) { "Hello <https://example.com>" }
 
-        pending "replaces the link into the url with the Ruboty format" do
+        it "replaces the link into the url with the Ruboty format" do
           expect(subject).to eq("Hello https://example.com")
         end
       end
@@ -49,8 +49,26 @@ RSpec.describe Ruboty::SlackEvents::Filter::Rubotify do
       context "when the text contains a link with text" do
         let(:text) { "Hello <https://example.com|Example Com>" }
 
-        pending "replaces the link into the text with the Ruboty format" do
+        it "replaces the link into the text with the Ruboty format" do
           expect(subject).to eq("Hello Example Com")
+        end
+      end
+
+      context "when the text contains a link with invalid url" do
+        let(:text) { "Hello <\\hoge>" }
+
+        it "does not replace the text" do
+          expect(subject).to eq("Hello <\\hoge>")
+        end
+      end
+    end
+
+    describe "unescape" do
+      context "when the text contains HTML entities" do
+        let(:text) { "&lt;div&gt;Hello World &amp; Rubyist!&lt;/div&gt;" }
+
+        it "unescapes HTML entities" do
+          expect(subject).to eq("<div>Hello World & Rubyist!</div>")
         end
       end
     end

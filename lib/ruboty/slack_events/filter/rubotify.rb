@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
+require "cgi"
+
 module Ruboty
   module SlackEvents
     module Filter
       # Convert Slack text format to Ruboty format
+      # For more details of Slack text format, see: https://api.slack.com/reference/surfaces/formatting
       class Rubotify
         attr_reader :resolvers #: Resolvers
 
@@ -14,8 +17,13 @@ module Ruboty
 
         # @rbs text: String
         def call(text) #: String
-          replace_user_mentions(text)
+          text
+            .then { replace_user_mentions(_1) }
+            .then { replace_link(_1) }
+            .then { unescape(_1) }
         end
+
+        private
 
         # @rbs text: String
         def replace_user_mentions(text) #: String
@@ -28,6 +36,29 @@ module Ruboty
 
             "@#{user_info.name}"
           end
+        end
+
+        # @rbs text: String
+        def replace_link(text) #: String
+          text.gsub(/<(?<url>[^\>|]+)(?:\|(?<text>[^\>]+))?>/) do |link|
+            url = Regexp.last_match[:url]
+            text = Regexp.last_match[:text]
+
+            begin
+              next link unless URI.parse(url).scheme
+            rescue URI::InvalidURIError, URI::InvalidComponentError
+              next link
+            end
+
+            text || url
+          end
+        end
+
+        # Unescape HTML entities in the text.
+        # See: https://api.slack.com/reference/surfaces/formatting#escaping
+        # @rbs text: String
+        def unescape(text) #: String
+          CGI.unescapeHTML(text)
         end
       end
     end
